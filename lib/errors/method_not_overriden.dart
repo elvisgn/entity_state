@@ -1,11 +1,11 @@
 class MethodGetIdNotOverriddenError extends Error {
-  String _reason;
+  String? _reason;
 
   MethodGetIdNotOverriddenError() {
     _reason = "Method GetId should be overriden and not called with super.";
   }
 
-  String getReason() {
+  String? getReason() {
     return _reason;
   }
 }
