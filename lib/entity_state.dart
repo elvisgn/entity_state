@@ -111,7 +111,7 @@ mixin EntityState<T, V, K, B> {
   ///}
   ///```
   K addMany(List<T> data) {
-    if (data == null || data.length < 1) {
+    if (data.length < 1) {
       return rebuild((b) => b);
     }
 
@@ -122,7 +122,8 @@ mixin EntityState<T, V, K, B> {
       ..entities = entities
           .rebuild((b) => b
             ..addIterable(data,
-                key: (dynamic item) => getId(item), value: (dynamic item) => item))
+                key: (dynamic item) => getId(item),
+                value: (dynamic item) => item))
           .toBuilder());
   }
 
@@ -164,7 +165,10 @@ mixin EntityState<T, V, K, B> {
   K updateMany(List<T> data) {
     return rebuild((b) => b
       ..entities = BuiltMap<V, T>.from(entities.toMap()
-            ..addAll(data.fold({}, ((a, b) => a..addAll({getId(b): b})) as Map<V, T?> Function(Map<V, T?>, T))))
+            ..addAll(data.fold(
+                {},
+                ((a, b) => a..addAll({getId(b): b})) as Map<V, T?> Function(
+                    Map<V, T?>, T))))
           .toBuilder());
   }
 
