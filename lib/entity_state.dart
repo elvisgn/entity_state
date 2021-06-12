@@ -54,7 +54,7 @@ mixin EntityState<T, V, K, B> {
   /// A Map that keeps all the values in the state.
   ///
   /// The key of the map is the value returned by [getId] method.
-  BuiltMap<V, T?> get entities;
+  BuiltMap<V, T> get entities;
 
   K rebuild(updates(B));
 
@@ -63,7 +63,7 @@ mixin EntityState<T, V, K, B> {
   /// Throws [MethodGetIdNotOverriddenError] exception if the method is called with super or is not overridden.
   ///
   /// The method returns the unique identifier of the entity that will be make up the key in the `entities` map.
-  V getId(T? data) {
+  V getId(T data) {
     throw MethodGetIdNotOverriddenError();
   }
 
@@ -167,8 +167,8 @@ mixin EntityState<T, V, K, B> {
       ..entities = BuiltMap<V, T>.from(entities.toMap()
             ..addAll(data.fold(
                 {},
-                ((a, b) => a..addAll({getId(b): b})) as Map<V, T?> Function(
-                    Map<V, T?>, T))))
+                ((a, b) => a..addAll({getId(b): b})) as Map<V, T> Function(
+                    Map<V, T>, T))))
           .toBuilder());
   }
 
@@ -192,7 +192,7 @@ mixin EntityState<T, V, K, B> {
           BuiltList<V>.from(ids.toList()..removeWhere((elem) => elem == data))
               .toBuilder()
       ..entities = BuiltMap<V, T>.from(
-              entities.toMap()..removeWhere((V key, T? value) => key == data))
+              entities.toMap()..removeWhere((V key, T value) => key == data))
           .toBuilder());
   }
 
@@ -216,7 +216,7 @@ mixin EntityState<T, V, K, B> {
               ids.toList()..removeWhere((elem) => data.contains(elem)))
           .toBuilder()
       ..entities = BuiltMap<V, T>.from(entities.toMap()
-            ..removeWhere((V key, T? value) => data.contains(key)))
+            ..removeWhere((V key, T value) => data.contains(key)))
           .toBuilder());
   }
 
@@ -264,7 +264,7 @@ mixin EntityState<T, V, K, B> {
   ///       notificationEntities: store.state.appNotification.getEntities());
   ///  }
   ///```
-  Map<V, T?> getEntities() {
+  Map<V, T> getEntities() {
     return entities.toMap();
   }
 
@@ -290,7 +290,7 @@ mixin EntityState<T, V, K, B> {
   ///    );
   /// }
   ///```
-  List<T?> getAll([int sortComparer(T? t1, T? t2)?]) {
+  List<T> getAll([int sortComparer(T t1, T t2)?]) {
     if (sortComparer != null) {
       return entities.values.toList()..sort(sortComparer);
     }
