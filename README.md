@@ -8,7 +8,7 @@ Add this to your project's pubspec.yaml
 
 ```
 dependencies:
-  entity_state: ^1.2.5
+  entity_state: ^2.0.1
 ```
 
 ## Usage
@@ -30,7 +30,7 @@ abstract class ReminderState
   factory ReminderState([updates(ReminderStateBuilder b)]) = _$ReminderState;
 
   static Serializer<ReminderState> get serializer => _$reminderStateSerializer;
-  
+
   // This will tell the entity state what is the unique identifier of the model.
   @override
     int getId(Reminder data) {
@@ -159,6 +159,7 @@ static _ViewModel fromStore(Store<AppState> store) {
 ```
 
 ### How to get the sorted data
+
 ```
 static _ViewModel fromStore(Store<AppState> store) {
        return _ViewModel(
